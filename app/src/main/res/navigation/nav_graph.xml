@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="by.bsuir.quiz.screens.login.LoginFragment"
+        android:label="login_fragment"
+        tools:layout="@layout/login_fragment" >
+        <action
+            android:id="@+id/action_loginFragment_to_stat"
+            app:destination="@id/stat" />
+    </fragment>
+    <fragment
+        android:id="@+id/quiz"
+        android:name="by.bsuir.quiz.screens.quiz.QuizFragment"
+        android:label="quiz_fragment"
+        tools:layout="@layout/quiz_fragment" >
+        <action
+            android:id="@+id/action_quiz_to_results"
+            app:destination="@id/results" />
+    </fragment>
+    <fragment
+        android:id="@+id/stat"
+        android:name="by.bsuir.quiz.screens.stat.StatFragment"
+        android:label="stat_fragment"
+        tools:layout="@layout/stat_fragment" >
+        <action
+            android:id="@+id/action_stat_to_quiz"
+            app:destination="@id/quiz" />
+    </fragment>
+    <fragment
+        android:id="@+id/results"
+        android:name="by.bsuir.quiz.screens.results.ResultsFragment"
+        android:label="results_fragment"
+        tools:layout="@layout/results_fragment" >
+        <action
+            android:id="@+id/action_results_to_stat"
+            app:destination="@id/stat" />
+    </fragment>
+</navigation>

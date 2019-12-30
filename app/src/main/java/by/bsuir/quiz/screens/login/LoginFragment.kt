@@ -12,6 +12,7 @@ import com.google.firebase.auth.FirebaseAuth
 import android.util.Log
 import android.widget.Toast
 import androidx.navigation.findNavController
+import by.bsuir.quiz.util.LOG_KEY
 
 
 class LoginFragment : Fragment() {
@@ -53,7 +54,7 @@ class LoginFragment : Fragment() {
                     .tryLogin(email, password)
                     .addOnCompleteListener(a) { task ->
                         if (task.isSuccessful) {
-                            Log.d("QUIZ", "signInWithEmail:success")
+                            Log.d(LOG_KEY, "signInWithEmail:success")
                             Toast.makeText(
                                 context, "Logged in successfully.",
                                 Toast.LENGTH_SHORT
@@ -62,7 +63,7 @@ class LoginFragment : Fragment() {
                                 LoginFragmentDirections.actionLoginFragmentToStat()
                             )
                         } else {
-                            Log.w("QUIZ", "signInWithEmail:failure", task.exception)
+                            Log.w(LOG_KEY, "signInWithEmail:failure", task.exception)
                             Toast.makeText(
                                 context, "Log in failed.",
                                 Toast.LENGTH_SHORT
@@ -73,8 +74,8 @@ class LoginFragment : Fragment() {
         }
     }
 
-//    private fun onLoginClicked() {
-//
-//    }
+    private fun onLoginClicked() {
+        // TODO: Refactor code above an move logic to separate methods
+    }
 
 }

@@ -5,4 +5,10 @@
     <string name="password_hint">Password</string>
     <string name="login_button_text">Login</string>
     <string name="sign_up_button_text">Sign Up</string>
+    <string name="start_button_text">Start Quiz</string>
+    <string name="stat_text_placeholder">Welcome!</string>
+    <string name="quiz_header_text_placeholder">Question</string>
+    <string name="quiz_question_text_placeholder">Question text</string>
+    <string name="quiz_next_button_text">Next</string>
+    <string name="quiz_back_button_text">Back</string>
 </resources>

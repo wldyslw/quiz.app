@@ -7,10 +7,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 
 import by.bsuir.quiz.R
 import by.bsuir.quiz.databinding.StatFragmentBinding
+import by.bsuir.quiz.models.Question
 import by.bsuir.quiz.util.LOG_KEY
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class StatFragment : Fragment() {
@@ -21,6 +24,7 @@ class StatFragment : Fragment() {
 
     private lateinit var db: FirebaseFirestore
     private lateinit var binding: StatFragmentBinding
+    private lateinit var questions: Array<Question>
 
     private val viewModel: StatViewModel by lazy {
         ViewModelProviders.of(this).get(StatViewModel::class.java)
@@ -48,14 +52,19 @@ class StatFragment : Fragment() {
 
     private fun fetchQuestions() {
         activity?.let {
+            binding.startQuizButton.isEnabled = false
             db.collection("quiz")
                 .get()
-                .addOnCompleteListener(it) { task ->
-                    if (task.isSuccessful) {
-                        Log.d(LOG_KEY, task.result.toString())
-                    } else {
-                        Log.e(LOG_KEY, "Failed to get questions: ", task.exception)
+                .addOnSuccessListener(it) { result ->
+                    result.forEach { doc ->
+                        Log.d(LOG_KEY, "${doc.id} -> ${doc.data}")
                     }
+                    questions = result.toObjects(Question::class.java).toTypedArray()
+                    view?.findNavController()
+                        ?.navigate(StatFragmentDirections.actionStatToQuiz(questions))
+                }
+                .addOnFailureListener(it) { ex ->
+                    Log.e(LOG_KEY, "Failed to get questions: ", ex)
                 }
         }
     }

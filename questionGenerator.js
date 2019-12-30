@@ -1,19 +1,28 @@
+const admin = require("firebase-admin");
+
+const serviceAccount = require("/c/Users/wldyslw/workspace/quiz-2e3f7-firebase-adminsdk-dwgge-6c42bae866.json");
+
+// admin.initializeApp({
+//     credential: admin.credential.cert(serviceAccount),
+//     databaseURL: "https://quiz-2e3f7.firebaseio.com"
+// });
+
 const lorem = [
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    'Fusce volutpat convallis egestas',
-    'Quisque maximus neque vitae odio auctor congue',
-    'Nullam nulla nisi, finibus in mauris vitae, vehicula consequat justo',
-    'Cras eu sodales ipsum',
-    'Sed consectetur dui vitae eros congue, sit amet tincidunt turpis finibus',
-    'Nam congue nec dolor molestie auctor',
-    'Vestibulum turpis mi, finibus vel mauris in, ullamcorper porta leo',
-    'Aenean ultrices nisl accumsan neque fringilla vulputate',
-    'Vivamus ornare leo ac venenatis rutrum',
-    'Proin auctor tortor eget fermentum fermentum',
-    'Sed vitae nulla et libero faucibus scelerisque',
-    'Nunc elit elit, vulputate sed luctus ut, dignissim nec diam',
-    'Suspendisse aliquam leo metus, ac euismod elit pretium quis',
-    'Integer vulputate leo id massa semper luctus',
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+    "Fusce volutpat convallis egestas",
+    "Quisque maximus neque vitae odio auctor congue",
+    "Nullam nulla nisi, finibus in mauris vitae, vehicula consequat justo",
+    "Cras eu sodales ipsum",
+    "Sed consectetur dui vitae eros congue, sit amet tincidunt turpis finibus",
+    "Nam congue nec dolor molestie auctor",
+    "Vestibulum turpis mi, finibus vel mauris in, ullamcorper porta leo",
+    "Aenean ultrices nisl accumsan neque fringilla vulputate",
+    "Vivamus ornare leo ac venenatis rutrum",
+    "Proin auctor tortor eget fermentum fermentum",
+    "Sed vitae nulla et libero faucibus scelerisque",
+    "Nunc elit elit, vulputate sed luctus ut, dignissim nec diam",
+    "Suspendisse aliquam leo metus, ac euismod elit pretium quis",
+    "Integer vulputate leo id massa semper luctus"
 ];
 
 const questions = lorem.map(text => {
@@ -23,9 +32,11 @@ const questions = lorem.map(text => {
         answers: answersIndexes.map((e, i) => {
             const isCorrect = e === 1;
             return {
-                text: `Question #${i}${isCorrect ? ' (Correct)' : ''}`,
-                isCorrect,
+                text: `Question #${i}${isCorrect ? " (Correct)" : ""}`,
+                isCorrect
             };
-        }),
+        })
     };
 });
+
+console.log(JSON.stringify(questions));

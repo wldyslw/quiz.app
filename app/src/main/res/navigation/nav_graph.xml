@@ -25,6 +25,9 @@
             android:id="@+id/action_quiz_to_results"
             app:destination="@id/results"
             app:enterAnim="@anim/nav_default_enter_anim" />
+        <argument
+            android:name="questions"
+            app:argType="by.bsuir.quiz.models.Question[]" />
     </fragment>
     <fragment
         android:id="@+id/stat"

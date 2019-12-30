@@ -8,6 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import by.bsuir.quiz.R
 import by.bsuir.quiz.databinding.LoginFragmentBinding
+import com.google.firebase.auth.FirebaseAuth
+import android.util.Log
+import android.widget.Toast
+import androidx.navigation.findNavController
 
 
 class LoginFragment : Fragment() {
@@ -16,15 +20,21 @@ class LoginFragment : Fragment() {
         fun newInstance() = LoginFragment()
     }
 
+    private val auth: FirebaseAuth by lazy {
+        FirebaseAuth.getInstance()
+    }
+
     private val viewModel: LoginViewModel by lazy {
         ViewModelProviders.of(this).get(LoginViewModel::class.java)
     }
+
+    private lateinit var binding: LoginFragmentBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = LoginFragmentBinding.inflate(inflater)
+        binding = LoginFragmentBinding.inflate(inflater)
 
         binding.lifecycleOwner = this
 
@@ -35,7 +45,36 @@ class LoginFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        // TODO: Use the ViewModel
+        binding.loginButton.setOnClickListener {
+            val email = binding.emailText.text.toString()
+            val password = binding.passwordText.text.toString()
+            activity?.let { a ->
+                viewModel
+                    .tryLogin(email, password)
+                    .addOnCompleteListener(a) { task ->
+                        if (task.isSuccessful) {
+                            Log.d("QUIZ", "signInWithEmail:success")
+                            Toast.makeText(
+                                context, "Logged in successfully.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            view?.findNavController()?.navigate(
+                                LoginFragmentDirections.actionLoginFragmentToStat()
+                            )
+                        } else {
+                            Log.w("QUIZ", "signInWithEmail:failure", task.exception)
+                            Toast.makeText(
+                                context, "Log in failed.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+            }
+        }
     }
+
+//    private fun onLoginClicked() {
+//
+//    }
 
 }

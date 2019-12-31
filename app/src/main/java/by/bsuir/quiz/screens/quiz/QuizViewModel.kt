@@ -7,7 +7,14 @@ import androidx.lifecycle.ViewModel
 import by.bsuir.quiz.models.Question
 
 class QuizViewModel : ViewModel() {
-    lateinit var questions: List<Question>
+    var questions: List<Question> = emptyList()
+    private val correctAnswersMap: List<Int> by lazy {
+        questions.map { q ->
+            q.answers?.indexOfFirst { it.isCorrect } ?: -1
+        }
+    }
+    private val answersMap: List<Int> = emptyList()
+
     private val _currentQuestionIndex = MutableLiveData<Int>()
 
     val headerText: LiveData<String> = Transformations.map(_currentQuestionIndex) {
@@ -25,10 +32,10 @@ class QuizViewModel : ViewModel() {
         _currentQuestionIndex.value = 0
     }
 
-    fun stepQuestionIndex(forward: Boolean = true) {
+    fun stepQuestionIndex(step: Int) {
         _currentQuestionIndex.value?.let {
             if (it < questions.size && it >= 0) {
-                _currentQuestionIndex.value = it + ((if (forward) 1 else 0) * 2 - 1)
+                _currentQuestionIndex.value = it + step
             }
         }
     }

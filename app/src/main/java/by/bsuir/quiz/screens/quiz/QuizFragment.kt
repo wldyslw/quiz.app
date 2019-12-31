@@ -6,11 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 
 import by.bsuir.quiz.R
 import by.bsuir.quiz.databinding.QuizFragmentBinding
+import by.bsuir.quiz.models.Question
+import by.bsuir.quiz.util.AnswerClickListener
 import by.bsuir.quiz.util.AnswerItemAdapter
 
 class QuizFragment : Fragment() {
@@ -35,7 +38,10 @@ class QuizFragment : Fragment() {
 
         viewModel.questions = QuizFragmentArgs.fromBundle(arguments!!).questions.toList()
 
-        val adapter = AnswerItemAdapter()
+        val adapter = AnswerItemAdapter(AnswerClickListener { isCorrect ->
+            viewModel.onClickAnswer(isCorrect)
+            Toast.makeText(context, viewModel.answersMap.toString(), Toast.LENGTH_SHORT).show()
+        })
         viewModel.currentQuestionIndex.observe(this, Observer { newIndex ->
             if (newIndex >= viewModel.questions.size) {
                 view?.findNavController()?.navigate(QuizFragmentDirections.actionQuizToResults())

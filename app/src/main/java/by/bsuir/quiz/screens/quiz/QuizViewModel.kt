@@ -8,12 +8,11 @@ import by.bsuir.quiz.models.Question
 
 class QuizViewModel : ViewModel() {
     var questions: List<Question> = emptyList()
-    private val correctAnswersMap: List<Int> by lazy {
-        questions.map { q ->
-            q.answers?.indexOfFirst { it.isCorrect } ?: -1
-        }
-    }
-    private val answersMap: List<Int> = emptyList()
+
+    private val _answersMap = mutableListOf<Boolean>()
+
+    val answersMap: List<Boolean>
+        get() = _answersMap
 
     private val _currentQuestionIndex = MutableLiveData<Int>()
 
@@ -30,6 +29,10 @@ class QuizViewModel : ViewModel() {
 
     init {
         _currentQuestionIndex.value = 0
+    }
+
+    fun onClickAnswer(isCorrect: Boolean) {
+        _answersMap.add(isCorrect)
     }
 
     fun stepQuestionIndex(step: Int) {

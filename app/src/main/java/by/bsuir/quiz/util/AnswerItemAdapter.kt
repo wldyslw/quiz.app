@@ -12,7 +12,9 @@ import by.bsuir.quiz.models.Answer
 import kotlinx.android.synthetic.main.answer_item_view.view.*
 import by.bsuir.quiz.databinding.AnswerItemViewBinding
 
-class AnswerItemAdapter : RecyclerView.Adapter<AnswerItemAdapter.AnswerItemViewHolder>() {
+class AnswerItemAdapter(
+    val clickListener: AnswerClickListener
+) : RecyclerView.Adapter<AnswerItemAdapter.AnswerItemViewHolder>() {
     private var selectedAnswer = -1
 
     var answers = listOf<Answer>()
@@ -27,10 +29,11 @@ class AnswerItemAdapter : RecyclerView.Adapter<AnswerItemAdapter.AnswerItemViewH
     override fun getItemCount() = answers.size
 
     override fun onBindViewHolder(holder: AnswerItemViewHolder, position: Int) {
-        val item = answers[position]
-        holder.answerItem.radioButton.text = item.text
-        holder.answerItem.radioButton.id = position
-        holder.answerItem.radioButton.isChecked = position == selectedAnswer
+        val item = get(position)
+        holder.answerItem.radioButton.apply {
+            text = item.text
+            isChecked = position == selectedAnswer
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
@@ -46,6 +49,8 @@ class AnswerItemAdapter : RecyclerView.Adapter<AnswerItemAdapter.AnswerItemViewH
     inner class AnswerItemViewHolder(val answerItem: AnswerItemViewBinding) :
         RecyclerView.ViewHolder(answerItem.root) {
         private val clickHandler: (View) -> Unit = {
+            val item = get(adapterPosition)
+            clickListener.onClick(item)
             selectedAnswer = adapterPosition
             notifyDataSetChanged()
         }
@@ -57,4 +62,8 @@ class AnswerItemAdapter : RecyclerView.Adapter<AnswerItemAdapter.AnswerItemViewH
             }
         }
     }
+}
+
+class AnswerClickListener(val clickListener: (isCorrect: Boolean) -> Unit) {
+    fun onClick(answer: Answer) = clickListener(answer.isCorrect)
 }

@@ -45,9 +45,12 @@ class StatFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
         binding.startQuizButton.setOnClickListener {
             fetchQuestions()
         }
+
+        viewModel.getStatistics()
     }
 
     private fun fetchQuestions() {

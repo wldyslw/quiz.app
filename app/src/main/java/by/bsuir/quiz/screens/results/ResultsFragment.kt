@@ -45,6 +45,8 @@ class ResultsFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        viewModel.sendStatistics()
+
         binding.totalScoreText.text = getString(
             R.string.quiz_finished_info,
             viewModel.correctAnswersCount,

@@ -44,7 +44,12 @@ class QuizFragment : Fragment() {
         })
         viewModel.currentQuestionIndex.observe(this, Observer { newIndex ->
             if (newIndex >= viewModel.questions.size) {
-                view?.findNavController()?.navigate(QuizFragmentDirections.actionQuizToResults())
+                view?.findNavController()
+                    ?.navigate(
+                        QuizFragmentDirections.actionQuizToResults(
+                            viewModel.answersMap.toBooleanArray()
+                        )
+                    )
             } else {
                 viewModel.questions[newIndex].answers?.let {
                     adapter.answers = it

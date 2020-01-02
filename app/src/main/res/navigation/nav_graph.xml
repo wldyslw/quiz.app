@@ -48,5 +48,8 @@
             android:id="@+id/action_results_to_stat"
             app:destination="@id/stat"
             app:enterAnim="@anim/nav_default_enter_anim" />
+        <argument
+            android:name="answers"
+            app:argType="boolean[]" />
     </fragment>
 </navigation>

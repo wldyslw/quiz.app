@@ -5,11 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.databinding.DataBindingUtil.inflate
-import androidx.databinding.DataBindingUtil
-import kotlinx.android.synthetic.main.quiz_fragment.view.*
 import by.bsuir.quiz.R
 import by.bsuir.quiz.models.Answer
-import kotlinx.android.synthetic.main.answer_item_view.view.*
 import by.bsuir.quiz.databinding.AnswerItemViewBinding
 
 class AnswerItemAdapter(
@@ -65,5 +62,5 @@ class AnswerItemAdapter(
 }
 
 class AnswerClickListener(val clickListener: (isCorrect: Boolean) -> Unit) {
-    fun onClick(answer: Answer) = clickListener(answer.isCorrect)
+    fun onClick(answer: Answer) = clickListener(answer.correct)
 }

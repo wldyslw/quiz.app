@@ -11,4 +11,9 @@
     <string name="quiz_question_text_placeholder">Question text</string>
     <string name="quiz_next_button_text">Next</string>
     <string name="quiz_back_button_text">Back</string>
+    <string name="quiz_finished">Quiz Finished!</string>
+    <string name="quiz_finished_info">
+        You have %1$d of %2$d correct answers (%3$s)
+    </string>
+    <string name="back_to_main_screen">Back to Home</string>
 </resources>

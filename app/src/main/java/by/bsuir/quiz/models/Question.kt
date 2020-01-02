@@ -7,7 +7,7 @@ import java.io.Serializable
 @Parcelize
 data class Answer(
     var text: String = "",
-    var isCorrect: Boolean = false
+    var correct: Boolean = false
 ) : Serializable, Parcelable
 
 @Parcelize

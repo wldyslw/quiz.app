@@ -8,8 +8,12 @@ import by.bsuir.quiz.models.Question
 
 class QuizViewModel : ViewModel() {
     var questions: List<Question> = emptyList()
+        set(value) {
+            field = value
+            _answersMap = MutableList(value.size) { false }
+        }
 
-    private val _answersMap = mutableListOf<Boolean>()
+    private var _answersMap = mutableListOf<Boolean>()
 
     val answersMap: List<Boolean>
         get() = _answersMap
@@ -32,7 +36,9 @@ class QuizViewModel : ViewModel() {
     }
 
     fun onClickAnswer(isCorrect: Boolean) {
-        _answersMap.add(isCorrect)
+        _currentQuestionIndex.value?.let {
+            _answersMap[it] = isCorrect
+        }
     }
 
     fun stepQuestionIndex(step: Int) {

@@ -6,15 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 
-import by.bsuir.quiz.R
 import by.bsuir.quiz.databinding.QuizFragmentBinding
-import by.bsuir.quiz.models.Question
 import by.bsuir.quiz.util.AnswerClickListener
 import by.bsuir.quiz.util.AnswerItemAdapter
+import by.bsuir.quiz.util.LOG_KEY
 
 class QuizFragment : Fragment() {
 
@@ -40,7 +39,7 @@ class QuizFragment : Fragment() {
 
         val adapter = AnswerItemAdapter(AnswerClickListener { isCorrect ->
             viewModel.onClickAnswer(isCorrect)
-            Toast.makeText(context, viewModel.answersMap.toString(), Toast.LENGTH_SHORT).show()
+            Log.d(LOG_KEY, "Answers map: ${viewModel.answersMap}")
         })
         viewModel.currentQuestionIndex.observe(this, Observer { newIndex ->
             if (newIndex >= viewModel.questions.size) {
@@ -60,10 +59,4 @@ class QuizFragment : Fragment() {
 
         return binding.root
     }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        // TODO: Use the ViewModel
-    }
-
 }

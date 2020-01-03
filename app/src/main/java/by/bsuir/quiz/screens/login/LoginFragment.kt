@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import by.bsuir.quiz.R
 import by.bsuir.quiz.databinding.LoginFragmentBinding
 import com.google.firebase.auth.FirebaseAuth
 import android.util.Log
@@ -46,6 +45,7 @@ class LoginFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
         binding.loginButton.setOnClickListener {
             val email = binding.emailText.text.toString()
             val password = binding.passwordText.text.toString()
@@ -72,10 +72,30 @@ class LoginFragment : Fragment() {
                     }
             }
         }
-    }
 
-    private fun onLoginClicked() {
-        // TODO: Refactor code above an move logic to separate methods
+        binding.signUpButton.setOnClickListener {
+            val email = binding.emailText.text.toString()
+            val password = binding.passwordText.text.toString()
+            activity?.let { a ->
+                viewModel
+                    .trySignUp(email, password)
+                    .addOnCompleteListener(a) { task ->
+                        if (task.isSuccessful) {
+                            Log.d(LOG_KEY, "signUpWithEmail:success")
+                            Toast.makeText(
+                                context,
+                                "Signed up successfully, now try to log in with provided credentials.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        } else {
+                            Log.w(LOG_KEY, "signUpWithEmail:failure", task.exception)
+                            Toast.makeText(
+                                context, "Sign up failed.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+            }
+        }
     }
-
 }

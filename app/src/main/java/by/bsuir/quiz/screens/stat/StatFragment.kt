@@ -69,6 +69,9 @@ class StatFragment : Fragment() {
                 .addOnFailureListener(it) { ex ->
                     Log.e(LOG_KEY, "Failed to get questions: ", ex)
                 }
+                .addOnCompleteListener {
+                    binding.startQuizButton.isEnabled = true
+                }
         }
     }
 

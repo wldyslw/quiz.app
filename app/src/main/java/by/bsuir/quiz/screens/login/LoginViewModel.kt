@@ -1,6 +1,5 @@
 package by.bsuir.quiz.screens.login
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
@@ -15,7 +14,7 @@ class LoginViewModel : ViewModel() {
         return auth.signInWithEmailAndPassword(email, password)
     }
 
-    fun trySignUp() {
-        // TODO
+    fun trySignUp(email: String, password: String) : Task<AuthResult> {
+        return auth.createUserWithEmailAndPassword(email, password)
     }
 }
